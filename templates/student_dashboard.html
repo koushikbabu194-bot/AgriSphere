@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+  <h2>Student Dashboard</h2>
+  <a class="btn btn-outline-primary" href="{{ url_for('student_profile') }}">Edit Profile / Resume</a>
+</div>
+<h4>Available Jobs</h4>
+<div class="row">
+{% for job in jobs %}
+  <div class="col-md-6 mb-3"><div class="card h-100 shadow-sm"><div class="card-body">
+    <h5>{{ job.title }}</h5><p><b>Company:</b> {{ job.company_name }}</p>
+    <p>{{ job.description }}</p>
+    <p><b>Salary:</b> {{ job.salary or "Not specified" }} | <b>Min CGPA:</b> {{ job.min_cgpa }}</p>
+    {% if job.deadline %}<p><b>Deadline:</b> {{ job.deadline }}</p>{% endif %}
+    <form method="post" action="{{ url_for('apply', job_id=job.id) }}"><button class="btn btn-primary">Apply</button></form>
+  </div></div></div>
+{% else %}<p>No jobs available.</p>{% endfor %}
+</div>
+<h4 class="mt-4">My Applications</h4>
+<div class="table-responsive"><table class="table table-bordered bg-white">
+<tr><th>Job</th><th>Company</th><th>Date</th><th>Status</th></tr>
+{% for a in apps %}<tr><td>{{ a.title }}</td><td>{{ a.company_name }}</td><td>{{ a.applied_at }}</td><td><span class="badge bg-secondary">{{ a.status }}</span></td></tr>
+{% else %}<tr><td colspan="4">No applications.</td></tr>{% endfor %}
+</table></div>
+<h4 class="mt-4">Interviews</h4>
+<div class="table-responsive"><table class="table table-bordered bg-white">
+<tr><th>Company</th><th>Job</th><th>Date</th><th>Time</th><th>Mode</th><th>Venue/Link</th></tr>
+{% for i in interviews %}<tr><td>{{ i.company_name }}</td><td>{{ i.title }}</td><td>{{ i.interview_date }}</td><td>{{ i.interview_time }}</td><td>{{ i.mode }}</td><td>{{ i.venue }}</td></tr>
+{% else %}<tr><td colspan="6">No interviews scheduled.</td></tr>{% endfor %}
+</table></div>
+{% endblock %}

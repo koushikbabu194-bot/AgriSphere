@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3"><h2>Company Dashboard</h2><a class="btn btn-primary" href="{{ url_for('new_job') }}">Post New Job</a></div>
+<h4>Your Jobs</h4>
+<div class="row">
+{% for job in jobs %}
+<div class="col-md-6 mb-3"><div class="card shadow-sm h-100"><div class="card-body"><h5>{{ job.title }}</h5><p>{{ job.description }}</p><p><b>Salary:</b> {{ job.salary }} · <b>Min CGPA:</b> {{ job.min_cgpa }}</p></div></div></div>
+{% else %}<p>You have not posted any jobs yet.</p>{% endfor %}
+</div>
+<h4 class="mt-4">Student Applications</h4>
+{% for a in apps %}
+<div class="card shadow-sm mb-3"><div class="card-body">
+<div class="d-flex justify-content-between flex-wrap"><div><h5>{{ a.name }} — {{ a.title }}</h5><p class="mb-1">{{ a.email }} · CGPA: {{ a.cgpa }}</p><p>Status: <b>{{ a.status }}</b></p>
+{% if a.resume %}<a href="{{ url_for('static', filename='uploads/' + a.resume) }}" target="_blank">View Resume</a>{% endif %}</div>
+<div>
+<form method="post" action="{{ url_for('update_application', app_id=a.id) }}" class="d-flex gap-2">
+<select name="status" class="form-select">
+{% for s in ['Applied','Shortlisted','Interview','Selected','Rejected'] %}<option {% if a.status == s %}selected{% endif %}>{{ s }}</option>{% endfor %}
+</select><button class="btn btn-outline-primary">Update</button>
+</form>
+</div></div>
+<hr><form method="post" action="{{ url_for('schedule_interview', app_id=a.id) }}" class="row g-2">
+<div class="col-md-2"><input class="form-control" type="date" name="date" required></div>
+<div class="col-md-2"><input class="form-control" type="time" name="time" required></div>
+<div class="col-md-2"><select class="form-select" name="mode" required><option value="">Mode</option><option>Online</option><option>Offline</option></select></div>
+<div class="col-md-4"><input class="form-control" name="venue" placeholder="Venue or meeting link"></div>
+<div class="col-md-2"><button class="btn btn-success w-100">Schedule</button></div>
+</form>
+</div></div>
+{% else %}<p>No applications received yet.</p>{% endfor %}
+{% endblock %}

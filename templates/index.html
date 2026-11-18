@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero p-5 mb-4 shadow-sm">
+  <h1 class="display-5 fw-bold">Placement Management System</h1>
+  <p class="lead">Connect students, companies and placement officers in one platform.</p>
+  {% if not current_user %}
+    <a class="btn btn-light btn-lg me-2" href="{{ url_for('register') }}">Get Started</a>
+    <a class="btn btn-outline-light btn-lg" href="{{ url_for('login') }}">Login</a>
+  {% else %}
+    <a class="btn btn-light btn-lg" href="{{ url_for('dashboard') }}">Open Dashboard</a>
+  {% endif %}
+</section>
+<h3 class="mb-3">Latest Job Opportunities</h3>
+<div class="row">
+{% for job in jobs %}
+  <div class="col-md-6 col-lg-4 mb-3"><div class="card shadow-sm h-100"><div class="card-body">
+    <h5>{{ job.title }}</h5><p class="text-primary fw-semibold">{{ job.company_name or job.company_user }}</p>
+    <p>{{ job.description or "No description provided." }}</p>
+    <p><b>Salary:</b> {{ job.salary or "Not specified" }}<br><b>Minimum CGPA:</b> {{ job.min_cgpa }}</p>
+  </div></div></div>
+{% else %}
+  <p>No jobs posted yet.</p>
+{% endfor %}
+</div>
+{% endblock %}

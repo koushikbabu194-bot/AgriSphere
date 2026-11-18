@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center"><div class="col-lg-8">
+<div class="card shadow-sm"><div class="card-body p-4">
+<h2 class="mb-3">Create Account</h2>
+<form method="post">
+  <label class="form-label">Register as</label>
+  <select class="form-select mb-3" name="role" id="role" required onchange="toggleFields()">
+    <option value="student">Student</option><option value="company">Company</option>
+  </select>
+  <div class="row">
+    <div class="col-md-6 mb-3"><label class="form-label">Contact Person / Full Name</label><input class="form-control" name="name" required></div>
+    <div class="col-md-6 mb-3"><label class="form-label">Email</label><input class="form-control" type="email" name="email" required></div>
+    <div class="col-md-6 mb-3"><label class="form-label">Password (minimum 6 characters)</label><input class="form-control" type="password" name="password" minlength="6" required></div>
+    <div class="col-md-6 mb-3"><label class="form-label">Phone</label><input class="form-control" name="phone"></div>
+  </div>
+  <div id="studentFields">
+    <div class="row">
+      <div class="col-md-6 mb-3"><label class="form-label">Department</label><input class="form-control" name="department"></div>
+      <div class="col-md-6 mb-3"><label class="form-label">Course</label><input class="form-control" name="course" placeholder="BCA, BSc, BE..."></div>
+      <div class="col-md-6 mb-3"><label class="form-label">CGPA (0–10)</label><input class="form-control" type="number" min="0" max="10" step="0.01" name="cgpa" value="0"></div>
+      <div class="col-md-6 mb-3"><label class="form-label">Graduation Year</label><input class="form-control" type="number" name="graduation_year"></div>
+    </div>
+  </div>
+  <div id="companyFields" style="display:none">
+    <div class="mb-3"><label class="form-label">Company Name</label><input class="form-control" name="company_name"></div>
+    <div class="mb-3"><label class="form-label">Location</label><input class="form-control" name="location"></div>
+    <div class="mb-3"><label class="form-label">Company Description</label><textarea class="form-control" name="description"></textarea></div>
+    <p class="text-warning small">Company accounts must be approved by the administrator before login.</p>
+  </div>
+  <button class="btn btn-primary">Register</button>
+</form>
+</div></div></div></div>
+<script>
+function toggleFields() {
+  const company = document.getElementById('role').value === 'company';
+  document.getElementById('studentFields').style.display = company ? 'none' : 'block';
+  document.getElementById('companyFields').style.display = company ? 'block' : 'none';
+}
+</script>
+{% endblock %}

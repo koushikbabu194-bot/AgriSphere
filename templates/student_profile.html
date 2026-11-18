@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center"><div class="col-lg-8">
+<div class="card shadow-sm"><div class="card-body p-4">
+<h2>Edit Student Profile</h2>
+<form method="post" enctype="multipart/form-data">
+  <div class="mb-3"><label class="form-label">Full Name</label><input class="form-control" name="name" value="{{ user.name or '' }}" required></div>
+  <div class="mb-3"><label class="form-label">Phone</label><input class="form-control" name="phone" value="{{ user.phone or '' }}"></div>
+  <div class="row">
+    <div class="col-md-6 mb-3"><label class="form-label">Department</label><input class="form-control" name="department" value="{{ user.department or '' }}"></div>
+    <div class="col-md-6 mb-3"><label class="form-label">Course</label><input class="form-control" name="course" value="{{ user.course or '' }}"></div>
+    <div class="col-md-6 mb-3"><label class="form-label">CGPA</label><input class="form-control" type="number" min="0" max="10" step="0.01" name="cgpa" value="{{ user.cgpa or 0 }}"></div>
+    <div class="col-md-6 mb-3"><label class="form-label">Graduation Year</label><input class="form-control" type="number" name="graduation_year" value="{{ user.graduation_year or '' }}"></div>
+  </div>
+  <div class="mb-3"><label class="form-label">Resume (PDF, DOC, DOCX)</label><input class="form-control" type="file" name="resume" accept=".pdf,.doc,.docx"></div>
+  {% if user.resume %}<p>Current resume: <a href="{{ url_for('static', filename='uploads/' + user.resume) }}" target="_blank">{{ user.resume }}</a></p>{% endif %}
+  <button class="btn btn-primary">Save Profile</button>
+  <a class="btn btn-secondary" href="{{ url_for('student_dashboard') }}">Back</a>
+</form>
+</div></div></div></div>
+{% endblock %}

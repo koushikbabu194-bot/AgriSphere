@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AgriSphere Smart Agriculture</title>
+  <link rel="stylesheet" href="style.css">
+
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"
+    }
+  }
+  </script>
+</head>
+<body>
+
+<aside class="sidebar">
+  <h2>🌱 AgriSphere</h2>
+  <p>SMART FARM SYSTEM</p>
+  <a href="#overview">Dashboard</a>
+  <a href="#crops">Crop Management</a>
+  <a href="#disease">Disease Detection</a>
+  <a href="#irrigation">Irrigation</a>
+  <a href="#tasks">Field Activities</a>
+  <a href="#inventory">Inventory</a>
+</aside>
+
+<main>
+<header>
+  <div>
+    <small>SMART AGRICULTURE INFORMATION SYSTEM</small>
+    <h1>Farm Dashboard 🌿</h1>
+  </div>
+  <button onclick="location.reload()">Refresh</button>
+</header>
+
+<section class="hero" id="overview">
+  <div>
+    <h1>Grow Smarter.<br>Harvest Better.</h1>
+    <p>Welcome to your intelligent farm management system.</p>
+  </div>
+  <div id="farm3d"></div>
+</section>
+
+<section class="stats">
+  <article><h3>Active Crops</h3><h1 id="cropCount">0</h1></article>
+  <article><h3>Soil Moisture</h3><h1 id="moisture">68%</h1></article>
+  <article><h3>Monthly Yield</h3><h1>2.4 t</h1></article>
+  <article><h3>Water Usage</h3><h1>1240 L</h1></article>
+</section>
+
+<section class="panel" id="crops">
+  <h2>🌾 Crop Management</h2>
+  <button onclick="addCrop()">Add Crop</button>
+  <table>
+    <thead>
+      <tr>
+        <th>Crop</th>
+        <th>Field</th>
+        <th>Stage</th>
+        <th>Health</th>
+        <th>Area</th>
+      </tr>
+    </thead>
+    <tbody id="cropTable"></tbody>
+  </table>
+</section>
+
+<section class="panel weather">
+  <h2>☀ Weather Information</h2>
+  <h1 id="temperature">Loading...</h1>
+  <p id="weatherDescription">Weather information</p>
+  <p id="humidity">Humidity: --</p>
+  <p id="wind">Wind: --</p>
+</section>
+
+<section class="panel" id="disease">
+  <h2>🍃 Crop Disease Screening</h2>
+  <p>Upload a leaf image and select the symptoms you observe.</p>
+  <input type="file" id="leafImage" accept="image/*">
+  <img id="preview" width="180" hidden>
+  <div>
+    <label><input type="checkbox" value="Yellowing"> Yellowing</label>
+    <label><input type="checkbox" value="Brown spots"> Brown spots</label>
+    <label><input type="checkbox" value="White powder"> White powder</label>
+    <label><input type="checkbox" value="Wilting"> Wilting</label>
+  </div>
+  <button onclick="screenDisease()">Review Symptoms</button>
+  <p id="diseaseResult"></p>
+</section>
+
+<section class="panel" id="irrigation">
+  <h2>💧 Smart Irrigation</h2>
+  <div id="irrigationZones"></div>
+  <p>Simulated soil moisture</p>
+  <input type="range" min="10" max="95" value="68"
+         oninput="updateMoisture(this.value)">
+  <p id="irrigationAlert">Moisture is in the demo target range.</p>
+</section>
+
+<section class="panel" id="tasks">
+  <h2>📋 Field Activities</h2>
+  <button onclick="addTask()">Add Task</button>
+  <div id="taskList"></div>
+</section>
+
+<section class="panel" id="inventory">
+  <h2>📦 Inventory Management</h2>
+  <button onclick="addStock()">Add Inventory</button>
+  <div id="inventoryList"></div>
+</section>
+
+<section class="panel">
+  <h2>👨‍🌾 Farmer Account</h2>
+  <input id="farmerName" placeholder="Name">
+  <input id="farmerEmail" placeholder="Email">
+  <input id="farmerPassword" type="password" placeholder="Password (8+ characters)">
+  <button onclick="registerFarmer()">Register</button>
+  <button onclick="loginFarmer()">Login</button>
+  <p id="accountMessage"></p>
+</section>
+
+<footer>AgriSphere · Smart Agriculture Management System</footer>
+</main>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>

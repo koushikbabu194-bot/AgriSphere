@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center"><div class="col-lg-8"><div class="card shadow-sm"><div class="card-body p-4">
+<h2>Post a New Job</h2>
+<form method="post">
+<div class="mb-3"><label class="form-label">Job Title</label><input class="form-control" name="title" required></div>
+<div class="mb-3"><label class="form-label">Job Description</label><textarea class="form-control" name="description" rows="4"></textarea></div>
+<div class="row">
+<div class="col-md-6 mb-3"><label class="form-label">Salary</label><input class="form-control" name="salary" placeholder="e.g. 4 LPA"></div>
+<div class="col-md-6 mb-3"><label class="form-label">Minimum CGPA</label><input class="form-control" type="number" min="0" max="10" step="0.01" name="min_cgpa" value="0"></div>
+<div class="col-md-6 mb-3"><label class="form-label">Eligible Course</label><input class="form-control" name="course" placeholder="Any, BCA, BSc..."></div>
+<div class="col-md-6 mb-3"><label class="form-label">Application Deadline</label><input class="form-control" type="date" name="deadline"></div>
+</div>
+<button class="btn btn-primary">Publish Job</button><a class="btn btn-secondary" href="{{ url_for('company_dashboard') }}">Cancel</a>
+</form></div></div></div></div>
+{% endblock %}

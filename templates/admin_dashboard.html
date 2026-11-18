@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 class="mb-4">Admin Dashboard</h2>
+<div class="row g-3 mb-4">
+{% for label,value in [('Students',counts.students),('Companies',counts.companies),('Jobs',counts.jobs),('Applications',counts.applications),('Selected',counts.placed)] %}
+<div class="col-6 col-md"><div class="card shadow-sm"><div class="card-body"><div class="text-muted">{{ label }}</div><div class="stat">{{ value }}</div></div></div></div>
+{% endfor %}
+</div>
+<div class="d-flex justify-content-between align-items-center"><h4>Pending Company Approvals</h4><a href="{{ url_for('admin_applications') }}" class="btn btn-outline-primary">View All Applications</a></div>
+<div class="table-responsive"><table class="table table-bordered bg-white">
+<tr><th>Company</th><th>Email</th><th>Location</th><th>Action</th></tr>
+{% for c in pending %}<tr><td>{{ c.company_name or c.name }}</td><td>{{ c.email }}</td><td>{{ c.location }}</td><td class="d-flex gap-2">
+<form method="post" action="{{ url_for('approve_company', user_id=c.id) }}"><button class="btn btn-success btn-sm">Approve</button></form>
+<form method="post" action="{{ url_for('reject_company', user_id=c.id) }}"><button class="btn btn-danger btn-sm">Reject</button></form>
+</td></tr>{% else %}<tr><td colspan="4">No pending company accounts.</td></tr>{% endfor %}
+</table></div>
+<h4 class="mt-4">Registered Students</h4>
+<div class="table-responsive"><table class="table table-bordered bg-white"><tr><th>Name</th><th>Email</th><th>Course</th><th>CGPA</th><th>Graduation Year</th></tr>
+{% for s in students %}<tr><td>{{ s.name }}</td><td>{{ s.email }}</td><td>{{ s.course }}</td><td>{{ s.cgpa }}</td><td>{{ s.graduation_year }}</td></tr>
+{% else %}<tr><td colspan="5">No students registered.</td></tr>{% endfor %}
+</table></div>
+{% endblock %}
